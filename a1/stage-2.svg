@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+<style>.ink{fill:none;stroke:#1d1b18;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}.soil{fill:none;stroke:#1d1b18;stroke-opacity:.55;stroke-width:.8;stroke-linecap:round}.g{fill:none;stroke:#3d8b4f;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.gf{fill:#3d8b4f}</style>
+<g transform="translate(100 232) scale(1.55) translate(-290 -200)">
+<path class="ink" d="M246 200 Q270 197 290 201 T334 199"/><path class="soil" d="M254 210 l12 -2 M304 213 l14 -2 M278 222 l10 -2 M316 224 l9 -2"/>
+<ellipse class="ink" cx="290" cy="214" rx="6" ry="4" transform="rotate(-20 290 214)"/>
+<path class="g" d="M291 210 Q287 190 292 166"/>
+<path class="g" d="M291 182 Q281 176 277 180 Q283 187 291 182"/>
+<path class="g" d="M292 170 Q301 162 306 166 Q300 173 292 170"/>
+</g>
+</svg>
