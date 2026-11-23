@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 520">
-<style>.ink{fill:none;stroke:#1d1b18;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}.soil{fill:none;stroke:#1d1b18;stroke-opacity:.55;stroke-width:.8;stroke-linecap:round}.g{fill:none;stroke:#3d8b4f;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.gf{fill:#3d8b4f}</style>
-<path class="ink" style="stroke-width:1.6" d="M0 300 Q60 294 120 301 T240 298 T360 302"/>
-<path class="soil" d="M30 330 l22 -1 M90 345 l18 -1 M150 336 l26 -1 M220 350 l20 -2 M290 338 l24 -3 M60 380 l16 -1 M130 395 l22 -2 M200 385 l18 -3 M270 400 l20 -1 M320 372 l14 -3 M40 430 l20 -2 M110 445 l24 -3 M190 438 l16 -2 M250 452 l22 -2 M310 428 l18 -2 M80 480 l18 -3 M160 490 l22 -2 M240 486 l16 -1"/>
-<ellipse class="ink" style="fill:#1d1b18" cx="180" cy="372" rx="9" ry="6" transform="rotate(-18 180 372)"/>
-<path class="g" style="stroke-width:2" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" d="M181 366 Q176 335 183 300 Q186 280 182 262"><animate attributeName="stroke-dashoffset" from="1" to="0" begin="0.6s" dur="2.4s" fill="freeze" calcMode="spline" keySplines=".4 0 .2 1" keyTimes="0;1"/></path>
-<path class="g" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" d="M182 270 Q170 262 165 267 Q172 276 182 270"><animate attributeName="stroke-dashoffset" from="1" to="0" begin="2.8s" dur="0.9s" fill="freeze"/></path>
-<path class="g" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" d="M183 264 Q195 254 201 259 Q194 268 183 264"><animate attributeName="stroke-dashoffset" from="1" to="0" begin="3.3s" dur="0.9s" fill="freeze"/></path>
-</svg>
