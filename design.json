@@ -1,0 +1,102 @@
+{
+ "art": "a2",
+ "splash": "splash.svg",
+ "boil": true,
+ "fonts": {
+  "name": {
+   "font": "Haiku Davan",
+   "weight": 700,
+   "size": 58
+  },
+  "deco": {
+   "font": "Hafez",
+   "weight": 400,
+   "size": 26
+  },
+  "ref": {
+   "font": "Bonyade Koodak",
+   "weight": 400,
+   "size": 12
+  },
+  "todayTitle": {
+   "font": "Shoor",
+   "weight": 700,
+   "size": 26
+  },
+  "todaySub": {
+   "font": "Bonyade Koodak",
+   "weight": 400,
+   "size": 14
+  },
+  "cardTitle": {
+   "font": "Shoor",
+   "weight": 700,
+   "size": 19
+  },
+  "cardSub": {
+   "font": "Bonyade Koodak",
+   "weight": 400,
+   "size": 13
+  },
+  "go": {
+   "font": "Bonyade Koodak",
+   "weight": 400,
+   "size": 13
+  },
+  "quote": {
+   "font": "Hafez",
+   "weight": 400,
+   "size": 22
+  },
+  "foot": {
+   "font": "Dana",
+   "weight": 400,
+   "size": 14
+  },
+  "hifzTitle": {
+   "font": "Hafez",
+   "weight": 400,
+   "size": 26
+  },
+  "hifzMeta": {
+   "font": "Bonyade Koodak",
+   "weight": 400,
+   "size": 13
+  },
+  "hint": {
+   "font": "Bonyade Koodak",
+   "weight": 400,
+   "size": 14
+  },
+  "quran": {
+   "font": "Amiri Quran",
+   "weight": 400,
+   "size": 30
+  },
+  "stepChip": {
+   "font": "Bonyade Koodak",
+   "weight": 400,
+   "size": 12
+  },
+  "btn": {
+   "font": "Bonyade Koodak",
+   "weight": 400,
+   "size": 15
+  },
+  "grade": {
+   "font": "Dana",
+   "weight": 500,
+   "size": 14
+  },
+  "translation": {
+   "font": "Dana",
+   "weight": 300,
+   "size": 14
+  },
+  "doneTitle": {
+   "font": "Shoor",
+   "weight": 700,
+   "size": 28
+  }
+ }
+}

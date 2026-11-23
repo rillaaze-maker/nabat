@@ -1,8 +1,9 @@
-# نبات · Nabat (prototype)
+# نبات · Nabat
 
-A gentle, self-paced Quran memorization prototype: a seed in the soil that grows as you memorize.
+A gentle, self-paced Quran memorization app (installable web app).
 
-- Quran text: [Tanzil.net](https://tanzil.net), CC BY 3.0, unmodified.
+- `/` the app · `/panel/` the design panel
+- Quran text: [Tanzil.net](https://tanzil.net), Uthmani, CC BY 3.0, unmodified. Translation: Makarem Shirazi (Tanzil, non-commercial).
+- Narrations: transcribed from the project's own book of narrations (page references inside).
 - Recitation: Husary (muallim) via [EveryAyah.com](https://everyayah.com).
-- Persian fonts are commercial fonts from [Fontiran](https://fontiran.com), used under a web licence. They are not free to reuse; do not copy them from this repository.
-- The Persian translation shown is a temporary placeholder, not a published translation.
+- Persian fonts: commercial fonts from [Fontiran](https://fontiran.com), used under a web licence. Not free to reuse.

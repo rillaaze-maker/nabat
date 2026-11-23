@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>نبات · پنل طراحی</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Shantell+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="../fonts.css" rel="stylesheet">
+<script>/* always load the freshest art bundle (no stale cache after regenerating) */
+for (const s of ['a1', 'a2']) document.write(`<script src="../${s}/art.js?v=${Date.now()}"><\/script>`);</script>
+<style>
+  :root{--paper:#f6f1e7;--ink:#1d1b18;--ink2:#6b655c;--green:#3a7d47;--line:#d9d1c2;
+        --calm:cubic-bezier(.22,.7,.2,1)}
+  *{box-sizing:border-box;margin:0}
+  body{background:#e9e3d6;font-family:Dana,sans-serif;color:var(--ink);min-height:100vh}
+  button{font:inherit;color:inherit;cursor:pointer}
+  .bar{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;padding:12px 16px 6px;font-size:13px}
+  .bar button,.bar select,.panel select,.panel button{padding:5px 12px;border:1.4px solid var(--ink);border-radius:18px 14px 20px 12px;background:var(--paper)}
+  .bar button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+  .bar label{display:flex;gap:6px;align-items:center;color:var(--ink2)}
+  .bar .sep{width:8px}
+  .panel{max-width:760px;margin:6px auto 0;padding:10px 14px;border:1.4px dashed var(--green);border-radius:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:13px;background:var(--paper)}
+  .panel[hidden]{display:none}
+  .panel b{font-weight:700}
+  .panel label{display:flex;gap:6px;align-items:center;color:var(--ink2)}
+  .panel .msg{color:var(--green)}
+  .credit{text-align:center;font-size:12px;color:var(--ink2);padding:0 16px 28px;line-height:1.9}
+  .credit a{color:var(--green)}
+  .hint-top{text-align:center;font-size:12px;color:var(--ink2);padding:4px 16px}
+  .stage{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;padding:10px 16px 48px;direction:ltr}
+  .col{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .col select{font:500 13px Dana,sans-serif;padding:3px 10px;border:1.2px solid var(--ink2);border-radius:12px;background:var(--paper);direction:rtl}
+  .phone{width:360px;height:760px;background:var(--paper);border:1.5px solid var(--ink);border-radius:34px 30px 36px 32px;overflow:hidden;position:relative;direction:rtl;display:flex;flex-direction:column;align-items:center}
+  .phone{overflow-y:auto;scrollbar-width:none}
+  .phone>*{flex-shrink:0}
+  .art{position:relative}
+  .art svg,.art img{width:100%;height:auto;display:block}
+  .ph{display:flex;align-items:center;justify-content:center;border:1.2px dashed var(--ink2);border-radius:10px;color:var(--ink2);font:11px "Shantell Sans",sans-serif;text-align:center;padding:4px;margin:auto;aspect-ratio:2/3}
+  body.fontmode [data-role]{outline:1px dashed var(--green);outline-offset:2px;cursor:copy}
+  body.fontmode [data-role].sel{outline:2px solid var(--green)}
+
+  /* ---------------- motion: slow, soft, hand-made ---------------- */
+  .filterboil{filter:url(#boil)}
+  body.noboil .filterboil{filter:none}
+  body.noboil .nb-f{animation:none!important;opacity:0!important}
+  body.noboil .nb-f1{opacity:1!important}
+  .enter>*{animation:rise 1.1s var(--calm) both;animation-delay:calc(var(--i,0)*120ms)}
+  .rise{animation:rise 1.1s var(--calm) both;animation-delay:var(--d,0s)}
+  @keyframes rise{from{opacity:0;transform:translateY(10px);filter:blur(2.5px)}to{opacity:1;transform:none;filter:none}}
+  .grow{animation:grow 2.4s var(--calm) both;animation-delay:var(--gd,0s)}
+  @keyframes grow{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+  .sway>svg,.sway>img{animation:sway 7s ease-in-out infinite;animation-delay:var(--sd,0s);transform-origin:50% 77%}
+  @keyframes sway{0%,100%{transform:rotate(-1.1deg)}50%{transform:rotate(1.3deg)}}
+  .thirsty{opacity:.55;transform:rotate(-7deg);transform-origin:50% 78%}
+  .standup{animation:standup 1.6s var(--calm) both}
+  @keyframes standup{from{opacity:.55;transform:rotate(-7deg)}to{opacity:1;transform:none}}
+  .wob{animation:wob 1.2s steps(1,end) infinite}
+  @keyframes wob{0%{border-radius:16px 22px 14px 20px}33%{border-radius:18px 20px 15px 22px}66%{border-radius:15px 23px 17px 19px}}
+  body.noboil .wob{animation:none}
+  .press{transition:transform .25s var(--calm)}
+  .press:active{transform:scale(.96)}
+  .soak{animation:soak 1.1s ease both;animation-delay:var(--d,0s)}
+  @keyframes soak{from{color:transparent;filter:blur(3px)}to{filter:blur(0)}}
+  .vanish{animation:vanish 1.6s ease both;animation-delay:var(--d,0s)}
+  @keyframes vanish{from{color:var(--ink);background-size:0 1px}to{color:transparent;background-size:100% 1px}}
+  .drops{position:absolute;inset:-6px 0 auto 0;height:40px;pointer-events:none}
+  .drops i{position:absolute;top:0;width:5px;height:7px;background:var(--green);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;opacity:0;animation:fall 1.1s ease-in both}
+  @keyframes fall{0%{opacity:0;transform:translateY(-8px)}25%{opacity:.9}100%{opacity:0;transform:translateY(30px)}}
+  @media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}}
+
+  /* ---------------- screens ---------------- */
+  .name{margin-top:112px;line-height:1.2}
+  .deco{margin-top:14px;text-align:center;padding:0 20px;line-height:2.1}
+  .ref{color:var(--ink2);margin-top:2px}
+  .splash-art{width:360px;margin-top:auto}
+  .today{padding:34px 24px 0;width:100%}
+  .muted,.today .sub{color:var(--ink2)}
+  .garden{display:flex;justify-content:space-around;align-items:flex-end;width:100%;padding:6px 10px 0;height:200px}
+  .garden>.art{width:70px}
+  .cards{display:flex;flex-direction:column;gap:14px;width:100%;padding:18px 24px}
+  .card{display:flex;align-items:center;gap:14px;padding:12px 16px;border:1.4px solid var(--ink);border-radius:16px 22px 14px 20px;background:none;text-align:right;width:100%}
+  .card>.art{width:46px;flex:none}
+  .card .t{display:block;line-height:1.5}
+  .card .go{margin-inline-start:auto;color:var(--green)}
+  .quote{text-align:center;padding:0 24px;line-height:2}
+  .foot-ayah{color:var(--ink);padding-bottom:30px}
+  .foot-ayah .quote{padding:0}
+  .foot{margin-top:auto;padding:0 24px 28px;text-align:center;color:var(--ink2);line-height:1.9}
+  .top{width:100%;display:flex;align-items:center;gap:10px;padding:22px 20px 0}
+  .back{border:none;background:none;color:var(--ink2);padding:4px 0}
+  .dots{margin-inline-start:auto;display:flex;gap:6px}
+  .dot{width:9px;height:9px;border:1.3px solid var(--ink);border-radius:50% 45% 55% 50%;transition:background .8s}
+  .dot.on{background:var(--green);border-color:var(--green)}
+  .head{width:100%;display:flex;align-items:flex-end;gap:12px;padding:6px 20px 0}
+  .head>.art{width:54px;flex:none}
+  .head .tt{line-height:1.4}
+  .hint{width:100%;padding:6px 20px 0;color:var(--ink2);line-height:1.8}
+  .mushaf{width:calc(100% - 32px);margin:10px 16px 0;padding:14px;border:1.3px solid var(--ink);border-radius:14px 20px 16px 18px;line-height:2.4;text-align:justify;text-align-last:center;min-height:180px}
+  .wd{position:relative;border-radius:3px}
+  .wd.hid{color:transparent;background:linear-gradient(var(--ink2),var(--ink2)) left calc(100% - .28em)/100% 1px no-repeat;cursor:pointer}
+  .wd.peek{color:var(--ink2)}
+  .wd.first::before{content:attr(data-first);position:absolute;inset-inline-start:0;top:-.05em;font-size:.62em;color:var(--ink2)}
+  .ay.cur .wd{color:var(--green);transition:color .8s}
+  /* ayah marker: an ink ring with a sprout. grey seed until the ayah is recited, then it greens and grows */
+  .mk{display:inline-block;position:relative;width:1.05em;height:1.32em;vertical-align:-.32em;margin:0 .08em}
+  .mk>svg,.mk>img{position:absolute;inset:0;width:100%;height:100%}
+  .mk .n{position:absolute;left:0;right:0;top:46%;text-align:center;font:500 .36em/1 Dana,sans-serif;color:var(--ink)}
+  .mk .mk-sprout{transform-box:fill-box;transform-origin:50% 100%;transition:opacity .8s}
+  .mk:not(.alive) .mk-sprout{opacity:.5}
+  .mk:not(.alive) .mk-sprout [fill="#3a7d47"],.mk:not(.alive) .mk-sprout [fill="#5f9e5a"]{fill:var(--ink2)}
+  .mk:not(.alive) .mk-sprout .g{stroke:var(--ink2)}
+  .mk.pop .mk-sprout{animation:sprout 1.4s cubic-bezier(.3,1.3,.4,1) both;animation-delay:var(--d,0s)}
+  @keyframes sprout{from{transform:scale(.35);opacity:.4}to{transform:none;opacity:1}}
+  .tr{width:calc(100% - 32px);margin:8px 16px 0;line-height:1.9;color:var(--ink2)}
+  .tr small{display:block;font-size:11px;opacity:.8}
+  .actions{width:100%;display:flex;gap:10px;justify-content:center;padding:14px 20px 0;flex-wrap:wrap}
+  .pill{padding:8px 18px;border:1.4px solid var(--ink);border-radius:20px 16px 22px 14px;background:none}
+  .pill.main{background:var(--ink);color:var(--paper)}
+  .pill.green{border-color:var(--green);color:var(--green)}
+  .grades{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px 16px 0}
+  .grades button{padding:10px 4px;border:1.4px solid var(--ink);border-radius:14px 18px 12px 16px;background:none}
+  .grades button.sug{border-color:var(--green);color:var(--green)}
+  .steps{width:100%;display:flex;gap:4px;justify-content:space-between;padding:12px 16px 0}
+  .steps button{flex:1;padding:6px 2px;border:none;border-bottom:2px solid var(--line);background:none;color:var(--ink2);line-height:1.3;transition:border-color .8s,color .8s}
+  .steps button.on{border-bottom-color:var(--green);color:var(--ink)}
+  .steps button.done{color:var(--green)}
+  .nav{margin-top:auto;width:100%;display:flex;justify-content:space-between;padding:12px 20px 26px}
+  .center{margin:auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:0 24px}
+  .center>.art{width:170px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="boil"><feTurbulence id="turb" type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="1"/>
+  <feDisplacementMap in="SourceGraphic" scale="2"/></filter>
+</svg>
+<div class="bar">
+  <button data-go="splash">آغاز</button>
+  <button data-go="today">امروز</button>
+  <button data-go="water">آب دادن</button>
+  <button data-go="sow">کاشتن</button>
+  <span class="sep"></span>
+  <button id="fontBtn" aria-pressed="false">انتخاب قلم</button>
+  <button id="boilBtn" aria-pressed="true">لرزش خط</button>
+  <button id="cmpBtn" aria-pressed="false">دو گوشی کنار هم</button>
+  <label>آغاز <select id="splashSel"></select></label>
+  <span class="sep"></span>
+  <button id="dlBtn">دانلود design.json</button>
+  <button id="clrBtn">پاک کردن پیش‌نمایش</button>
+  <a href="../" id="appLink" style="padding:5px 12px;border:1.4px solid var(--green);color:var(--green);border-radius:18px 14px 20px 12px;text-decoration:none">باز کردن اپ ←</a>
+</div>
+<p class="hint-top">هر تغییری اینجا، همان لحظه در اپ (روی همین مرورگر) دیده می‌شود. برای همه‌ی کاربران: «دانلود design.json» و جایگزینی آن در هاست. «انتخاب قلم» را بزن و روی هر نوشته بزن تا قلمش را جدا عوض کنی. طرح نقاشی را از بالای هر گوشی انتخاب کن.</p>
+<div class="panel" id="panel" hidden></div>
+<div class="stage" id="stage"></div>
+<p class="credit">نمونه‌ی اولیه‌ی «نبات» · متن قرآن از <a href="https://tanzil.net" target="_blank" rel="noopener">Tanzil.net</a> (CC BY 3.0، بدون تغییر) · تلاوت استاد حصری از <a href="https://everyayah.com" target="_blank" rel="noopener">EveryAyah.com</a> · ترجمه‌ی فارسی موقت است و از ترجمه‌ی منتشرشده‌ای گرفته نشده.</p>
+
+<script>
+/* ================================================================== fonts */
+const FAMS = {
+  'Dana':[100,200,300,400,500,600,700,800,900], 'Bonyade Koodak':[400,700,900], 'Croissant':[300,700],
+  'Haiku Kharaman':[200,400,500,700], 'Haiku Davan':[200,400,500,700], 'Shoor':[400,700], 'Shoor Rounded':[400,700],
+  'Hafez':[400], 'Amiri Quran':[400]
+};
+const UI_FAMS = Object.keys(FAMS).filter(f => f !== 'Amiri Quran');
+const ROLES = {   // defaults = the user's chosen settings (2026-11-24)
+  name:{l:'نام برنامه',f:'Haiku Davan',w:700,s:58}, deco:{l:'آیه‌ی تزئینی (آغاز)',f:'Hafez',w:400,s:26,k:'deco'},
+  ref:{l:'نشانی آیه',f:'Bonyade Koodak',w:400,s:12}, todayTitle:{l:'تیتر امروز',f:'Shoor',w:700,s:26},
+  todaySub:{l:'زیرتیتر امروز',f:'Bonyade Koodak',w:400,s:14}, cardTitle:{l:'تیتر کارت‌ها',f:'Shoor',w:700,s:19},
+  cardSub:{l:'توضیح کارت‌ها',f:'Bonyade Koodak',w:400,s:13}, go:{l:'پیوند کارت',f:'Bonyade Koodak',w:400,s:13},
+  quote:{l:'آیه‌ی پایین صفحه',f:'Hafez',w:400,s:22,k:'deco'}, foot:{l:'جمله‌ی پایانی',f:'Dana',w:400,s:14},
+  hifzTitle:{l:'نام سوره',f:'Hafez',w:400,s:26}, hifzMeta:{l:'جزئیات و شمارنده',f:'Bonyade Koodak',w:400,s:13},
+  hint:{l:'راهنما',f:'Bonyade Koodak',w:400,s:14}, quran:{l:'متن قرآن',f:'Amiri Quran',w:400,s:30,k:'quran'},
+  stepChip:{l:'مرحله‌ها',f:'Bonyade Koodak',w:400,s:12}, btn:{l:'دکمه‌ها',f:'Bonyade Koodak',w:400,s:15},
+  grade:{l:'دکمه‌های ارزیابی',f:'Dana',w:500,s:14}, translation:{l:'ترجمه',f:'Dana',w:300,s:14},
+  doneTitle:{l:'تیتر پایان',f:'Shoor',w:700,s:28}
+};
+const KEY = 'nabat-fonts-v1';
+let cfg = {};
+try { cfg = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { cfg = {}; }
+const DKEY = 'nabat-design-v1';
+function designNow() {
+  return { art: (typeof phoneSets !== 'undefined' ? phoneSets[0] : 'a2'), splash: (typeof S !== 'undefined' ? S.splash : 'splash.svg'),
+           boil: document.getElementById('boilBtn').getAttribute('aria-pressed') === 'true',
+           fonts: Object.fromEntries(Object.keys(ROLES).map(r => { const c = roleCfg(r); return [r, { font: c.f, weight: +c.w, size: +c.s }]; })) };
+}
+const saveDesign = () => { try { localStorage.setItem(DKEY, JSON.stringify(designNow())); } catch (e) {} };
+try { const d = JSON.parse(localStorage.getItem(DKEY) || 'null');
+  if (d && d.fonts) for (const [r, v] of Object.entries(d.fonts)) if (ROLES[r]) cfg[r] = { f: v.font, w: v.weight, s: v.size }; } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(cfg)); } catch (e) {} saveDesign(); };
+const roleCfg = r => Object.assign({}, ROLES[r], cfg[r] || {});
+let selRole = null;
+
+function applyFonts() {
+  document.querySelectorAll('[data-role]').forEach(el => {
+    const c = roleCfg(el.dataset.role);
+    el.style.fontFamily = `'${c.f}', Dana, sans-serif`;
+    el.style.fontWeight = c.w; el.style.fontSize = c.s + 'px';
+    if (el.dataset.uthmani) el.textContent = c.f === 'Amiri Quran' ? el.dataset.uthmani : el.dataset.simple;
+    el.classList.toggle('sel', el.dataset.role === selRole);
+  });
+}
+function showPanel() {
+  const p = document.getElementById('panel');
+  if (!selRole || !document.body.classList.contains('fontmode')) { p.hidden = true; return; }
+  const c = roleCfg(selRole), kind = ROLES[selRole].k;
+  const fams = kind === 'quran' ? ['Amiri Quran'] : kind === 'deco' ? ['Hafez', 'Amiri Quran'] : UI_FAMS;
+  p.hidden = false;
+  p.innerHTML = `<b>${ROLES[selRole].l}</b>
+    <label>قلم <select id="pf">${fams.map(f => `<option ${f === c.f ? 'selected' : ''}>${f}</option>`).join('')}</select></label>
+    <label>وزن <select id="pw">${FAMS[c.f].map(w => `<option ${w === +c.w ? 'selected' : ''}>${w}</option>`).join('')}</select></label>
+    <label>اندازه <input id="ps" type="range" min="10" max="72" value="${c.s}"> <span id="psv">${c.s}</span></label>
+    <button id="pr">بازنشانی</button><button id="pc">کپی همه‌ی تنظیمات</button><span class="msg" id="pm"></span>
+    ${kind === 'quran' ? '<span class="msg">متن قرآنِ صفحه‌ی حفظ فقط با قلم قرآنیِ عثمانی نمایش داده می‌شود.</span>' : ''}
+    ${kind === 'deco' ? '<span class="msg">Hafez با رسم‌الخط املایی، Amiri Quran با رسم عثمانی.</span>' : ''}`;
+  const set = patch => { cfg[selRole] = Object.assign({}, cfg[selRole] || {}, patch); save(); applyFonts(); };
+  p.querySelector('#pf').onchange = e => { const f = e.target.value, ws = FAMS[f], cur = +roleCfg(selRole).w;
+    set({ f, w: ws.includes(cur) ? cur : ws.reduce((a, b) => Math.abs(b - 400) < Math.abs(a - 400) ? b : a) }); showPanel(); };
+  p.querySelector('#pw').onchange = e => set({ w: +e.target.value });
+  p.querySelector('#ps').oninput = e => { p.querySelector('#psv').textContent = e.target.value; set({ s: +e.target.value }); };
+  p.querySelector('#pr').onclick = () => { delete cfg[selRole]; save(); applyFonts(); showPanel(); };
+  p.querySelector('#pc').onclick = async () => {
+    const all = Object.fromEntries(Object.keys(ROLES).map(r => { const c = roleCfg(r); return [r, { font: c.f, weight: +c.w, size: +c.s }]; }));
+    try { await navigator.clipboard.writeText(JSON.stringify(all, null, 1)); p.querySelector('#pm').textContent = 'کپی شد؛ برایم بفرستش.'; }
+    catch (e) { p.querySelector('#pm').textContent = 'کپی نشد'; }
+  };
+}
+
+/* ================================================================== art sets */
+const SETS = { a1: 'خط ساده (نسخه‌ی اول)', a2: 'قلم‌مو (نسخه‌ی دوم)', b: 'دست تو (B)' };
+const phoneSets = ['a2', 'a1'];
+try { const d = JSON.parse(localStorage.getItem('nabat-design-v1') || 'null'); if (d && d.art) phoneSets[0] = d.art; } catch (e) {}
+const ART = window.NABAT_ART || {};
+function art(set, f, cls = '', w = 60) {
+  if (set === 'b') {
+    return `<div class="art ${cls} filterboil"><img src="../b/${f}" alt="" onerror="this.outerHTML='<div class=&quot;ph&quot; style=&quot;width:${w}px&quot;>draw me<br>${f}</div>'"></div>`;
+  }
+  const svg = (ART[set] || {})[f];
+  return `<div class="art ${cls} ${set === 'a1' ? 'filterboil' : ''}">${svg || ''}</div>`;
+}
+function marker(set, n, alive, pop, d) {
+  const src = set === 'b' ? 'a1' : set;
+  return `<span class="mk ${alive ? 'alive' : ''} ${pop ? 'pop' : ''} ${src === 'a1' ? 'filterboil' : ''}" style="--d:${d}s">${(ART[src] || {})['marker.svg'] || ''}<span class="n">${FA_DIG(n)}</span></span>`;
+}
+
+/* ================================================================== content (Uthmani text: Tanzil) */
+const SURAHS = {
+  asr:    { name:'العصر', stage:3, last:'۹ روز پیش', ayat:['وَٱلْعَصْرِ','إِنَّ ٱلْإِنسَٰنَ لَفِى خُسْرٍ','إِلَّا ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّٰلِحَٰتِ وَتَوَاصَوْا۟ بِٱلْحَقِّ وَتَوَاصَوْا۟ بِٱلصَّبْرِ'] },
+  ikhlas: { name:'الإخلاص', stage:4, last:'۱۴ روز پیش', ayat:['قُلْ هُوَ ٱللَّهُ أَحَدٌ','ٱللَّهُ ٱلصَّمَدُ','لَمْ يَلِدْ وَلَمْ يُولَدْ','وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ'] },
+  fatiha: { name:'الفاتحة', stage:5, last:'۳۰ روز پیش', ayat:['بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ','ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ','ٱلرَّحْمَٰنِ ٱلرَّحِيمِ','مَٰلِكِ يَوْمِ ٱلدِّينِ','إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ','ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ','صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ'] },
+  kawthar:{ name:'الکوثر', stage:0, ayat:['إِنَّآ أَعْطَيْنَٰكَ ٱلْكَوْثَرَ','فَصَلِّ لِرَبِّكَ وَٱنْحَرْ','إِنَّ شَانِئَكَ هُوَ ٱلْأَبْتَرُ'],
+            tr:['ما به تو خیرِ بسیار (کوثر) بخشیدیم؛','پس برای پروردگارت نماز بگزار و قربانی کن.','بی‌گمان، بدخواهِ توست که بی‌دنباله است.'] }
+};
+const QUEUE = ['asr', 'ikhlas', 'fatiha'];
+const STEPS = [
+  ['گوش دادن', 'گوش بده؛ سه بار، آرام. چشم‌هایت روی کلمه‌ها.'],
+  ['بلند خواندن', 'همراه قاری، بلند بخوان. صدای خودت هم حافظه است.'],
+  ['حرف اول', 'فقط حرف اول هر کلمه پیداست. بقیه را از دلت بخوان.'],
+  ['کم‌رنگ', 'هر دور، کلمه‌های بیشتری آرام پنهان می‌شوند.'],
+  ['از حفظ', 'حالا از حفظ. کلمه‌ی اول سرنخ توست.']
+];
+const FA_DIG = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+const MARKS = /[ؐ-ًؚ-ٰٟۖ-ࣰۭ-ࣲـ]/g;
+const firstLetter = w => { const c = w.replace(MARKS, '')[0] || ''; return c === 'ٱ' ? 'ا' : c; };
+const hashed = i => ((i * 2654435761) >>> 0) / 4294967296;
+const FRAC = [0.25, 0.5, 0.75, 0.92];
+
+/* ================================================================== state */
+const S = { splash:(() => { try { return (JSON.parse(localStorage.getItem('nabat-design-v1') || 'null') || {}).splash || 'splash.svg'; } catch (e) { return 'splash.svg'; } })(), screen:'splash', ri:0, peek:new Set(), revealed:false, step:0, round:0, playing:-1, heard:new Set(),
+            showTr:false, watered:new Set(), drinking:false, anim:null, enter:'full' };
+
+function mushaf(set, key, mode) {
+  const s = SURAHS[key]; let wi = 0; let soakN = 0;
+  const ay = s.ayat.map((a, ai) => {
+    const spans = a.split(' ').map(w => {
+      const i = wi++; let cls = 'wd', st = '';
+      if (mode === 'review') {
+        if (!S.revealed && i > 0 && !S.peek.has(i)) cls += ' hid';
+        else if (S.peek.has(i) && !S.revealed) { cls += ' peek'; if (S.anim === 'peek' && S.lastPeek === i) cls += ' soak'; }
+        if (S.anim === 'reveal' && i > 0 && !S.peek.has(i)) { cls += ' soak'; st = `--d:${(soakN++ * 0.07).toFixed(2)}s`; }
+      }
+      if (mode === 'first') cls += ' hid first';
+      if (mode === 'fade') {
+        const h = hashed(i + 7), f = FRAC[Math.min(S.round, 3)], pf = S.round ? FRAC[Math.min(S.round - 1, 3)] : 0;
+        if (i > 0 && h < f) { cls += ' hid'; if (S.anim === 'round' && h >= pf) { cls += ' vanish'; st = `--d:${(soakN++ * 0.12).toFixed(2)}s`; } }
+      }
+      if (mode === 'memory' && i > 0) cls += ' hid';
+      if (S.anim === 'reveal-sow' && i > 0) { cls = 'wd soak'; st = `--d:${(soakN++ * 0.06).toFixed(2)}s`; }
+      return `<span class="${cls}" style="${st}" data-w="${i}" data-first="${firstLetter(w)}">${w}</span>`;
+    }).join(' ');
+    let alive, pop = false, d = 0;
+    if (mode === 'review') { alive = S.revealed; pop = S.anim === 'reveal'; d = 0.5 + ai * 0.35; }
+    else { alive = S.heard.has(ai) || S.step >= 2; pop = S.anim === 'heard' && S.playing === ai; }
+    return `<span class="ay ${S.playing === ai ? 'cur' : ''}">${spans} ${marker(set, ai + 1, alive, pop, d)}</span>`;
+  }).join(' ');
+  return `<div class="mushaf wob" data-role="quran">${ay}</div>`;
+}
+
+const E = () => S.enter === 'full';
+const SCREENS = {
+  splash: set => `
+    <p class="name rise" style="--d:3.4s" data-role="name">نبات</p>
+    <p class="deco rise" style="--d:4.1s" data-role="deco" data-uthmani="وَلَا حَبَّةٍ فِى ظُلُمَٰتِ ٱلْأَرْضِ" data-simple="وَلَا حَبَّةٍ فِي ظُلُمَاتِ الْأَرْضِ"></p>
+    <p class="ref rise" style="--d:4.6s" data-role="ref">الأنعام ۵۹</p>
+    ${art(set, (ART[set] || {})[S.splash] ? S.splash : 'splash.svg', 'splash-art', 300)}`,
+
+  today: set => {
+    const plants = [['stage-5.svg', ''], ['stage-4.svg', ''], ['stage-3.svg', S.watered.has('asr') ? '' : 'thirsty'], ['stage-1.svg', ''], ['stage-0.svg', '']];
+    return `
+    <div class="today"><p data-role="todayTitle">امروز · حدود ۱۲ دقیقه</p>
+      <p class="sub" data-role="todaySub">${S.watered.size ? 'باغ سیراب است؛ یک بذر آماده‌ی کاشتن' : 'سه گیاه تشنه‌اند، یک بذر آماده‌ی کاشتن'}</p></div>
+    <div class="garden">${plants.map(([f, c], i) => art(set, f, `${c} sway ${E() ? 'grow' : ''}`).replace('class="art', `style="--gd:${(0.35 + i * 0.22).toFixed(2)}s;--sd:${(-i * 1.4).toFixed(1)}s" class="art`)).join('')}</div>
+    <div class="cards">
+      <button class="card wob press" data-act="go:water">${art(set, 'water.svg', '', 46)}
+        <span><span class="t" data-role="cardTitle">آب دادن</span><span class="t muted" data-role="cardSub">مرور · ۳ گیاه · حدود ۸ دقیقه</span></span>
+        <span class="go" data-role="go">${S.watered.size ? 'سیراب ✓' : 'شروع'}</span></button>
+      <button class="card wob press" data-act="go:sow">${art(set, 'seed.svg', '', 46)}
+        <span><span class="t" data-role="cardTitle">کاشتن</span><span class="t muted" data-role="cardSub">یک بذر تازه · الکوثر ۱–۳</span></span>
+        <span class="go" data-role="go">بعدش</span></button>
+    </div>
+    <div class="foot foot-ayah"><p class="quote" data-role="quote" data-uthmani="أَأَنتُمْ تَزْرَعُونَهُۥٓ أَمْ نَحْنُ ٱلزَّٰرِعُونَ" data-simple="أَأَنْتُمْ تَزْرَعُونَهُ أَمْ نَحْنُ الزَّارِعُونَ"></p>
+      <p class="ref" data-role="ref">الواقعة ۶۴</p></div>`;
+  },
+
+  water: set => {
+    const key = QUEUE[S.ri], s = SURAHS[key];
+    const sug = S.peek.size > 1 ? 1 : S.peek.size === 1 ? 2 : 3;
+    const plantCls = S.drinking ? 'standup' : (key === 'asr' && !S.revealed ? 'thirsty' : '');
+    return `
+    <div class="top"><button class="back" data-act="go:today" data-role="hifzMeta">→ امروز</button>
+      <span class="muted" data-role="hifzMeta">آب دادن · ${FA_DIG(S.ri + 1)} از ${FA_DIG(QUEUE.length)}</span>
+      <span class="dots">${QUEUE.map((q, i) => `<span class="dot ${i < S.ri || (i === S.ri && S.drinking) ? 'on' : ''}"></span>`).join('')}</span></div>
+    <div class="head"><div class="art" style="width:54px;flex:none">${art(set, `stage-${s.stage}.svg`, `sway ${plantCls}`, 54)}
+        ${S.drinking ? `<div class="drops"><i style="left:30%;animation-delay:0s"></i><i style="left:52%;animation-delay:.25s"></i><i style="left:42%;animation-delay:.5s"></i></div>` : ''}</div>
+      <div><p class="tt" data-role="hifzTitle">${s.name}</p><p class="muted" data-role="hifzMeta">آخرین آب: ${s.last}</p></div></div>
+    <p class="hint" data-role="hint">${S.revealed ? 'چطور بود؟ با خودت صادق باش؛ این فقط برای زمان‌بندیِ آب دادن است.' : 'از حفظ بخوان، بعد ببین. هر کلمه را برای دیدن لمس کن.'}</p>
+    ${mushaf(set, key, 'review')}
+    ${S.revealed
+      ? `<div class="grades ${S.anim === 'reveal' ? 'rise' : ''}" style="--d:1.2s">${['دوباره', 'سخت بود', 'خوب', 'روان'].map((g, i) => `<button data-act="grade:${i}" data-role="grade" class="wob press ${i === sug ? 'sug' : ''}">${g}</button>`).join('')}</div>`
+      : `<div class="actions"><button class="pill main wob press" data-act="reveal" data-role="btn">نشانم بده</button></div>`}
+    <p class="foot" data-role="foot">${S.drinking ? 'آب خورد.' : S.peek.size ? `${FA_DIG(S.peek.size)} کلمه را نگاه کردی؛ اشکالی ندارد.` : ' '}</p>`;
+  },
+
+  watered: set => `
+    <div class="center">${art(set, 'stage-5.svg', 'grow sway', 170)}
+      <p class="rise" style="--d:1.6s" data-role="doneTitle">باغ سیراب شد</p>
+      <p class="muted rise" style="--d:1.9s" data-role="hifzMeta">سه گیاه آب خوردند · حدود ۸ دقیقه</p>
+      <p class="quote rise" style="--d:2.4s" data-role="quote" data-uthmani="تُؤْتِىٓ أُكُلَهَا كُلَّ حِينٍۭ بِإِذْنِ رَبِّهَا" data-simple="تُؤْتِي أُكُلَهَا كُلَّ حِينٍ بِإِذْنِ رَبِّهَا"></p>
+      <p class="ref rise" style="--d:2.6s" data-role="ref">ابراهیم ۲۵</p>
+      <div class="actions rise" style="--d:3s"><button class="pill wob press" data-act="go:today" data-role="btn">برگشت به باغ</button><button class="pill green wob press" data-act="go:sow" data-role="btn">کاشتنِ بذر تازه</button></div>
+    </div>`,
+
+  sow: set => {
+    const mode = ['full', 'full', 'first', 'fade', 'memory'][S.step], s = SURAHS.kawthar;
+    return `
+    <div class="top"><button class="back" data-act="go:today" data-role="hifzMeta">→ امروز</button>
+      <span class="muted" data-role="hifzMeta">کاشتن · بذر تازه</span></div>
+    <div class="head">${art(set, 'seed.svg', '', 54)}<div><p class="tt" data-role="hifzTitle">الکوثر ۱–۳</p></div></div>
+    <div class="steps">${STEPS.map(([n], i) => `<button data-act="step:${i}" data-role="stepChip" class="${i === S.step ? 'on' : i < S.step ? 'done' : ''}">${FA_DIG(i + 1)}<br>${n}</button>`).join('')}</div>
+    <p class="hint ${S.enter === 'soft' ? 'rise' : ''}" data-role="hint">${STEPS[S.step][1]}</p>
+    <div class="${S.enter === 'soft' ? 'rise' : ''}" style="--d:.15s;width:100%;display:flex;justify-content:center">${mushaf(set, 'kawthar', mode)}</div>
+    ${S.showTr ? `<div class="tr rise" data-role="translation">${s.tr.join(' ')}<small>ترجمه‌ی موقت برای نمونه؛ نسخه‌ی نهایی از ترجمه‌ی مجاز استفاده می‌کند.</small></div>` : ''}
+    <div class="actions">
+      ${S.step < 2 ? `<button class="pill main wob press" data-act="play" data-role="btn">${S.playing >= 0 ? 'توقف' : 'پخش با قاری'}</button>` : ''}
+      ${S.step === 3 ? `<button class="pill main wob press" data-act="round" data-role="btn">یک دور دیگر</button>` : ''}
+      ${S.step === 4 ? `<button class="pill main wob press" data-act="reveal-sow" data-role="btn">نشانم بده</button><button class="pill green wob press" data-act="plant" data-role="btn">کاشتم</button>` : ''}
+      <button class="pill wob press" data-act="tr" data-role="btn">${S.showTr ? 'بدون ترجمه' : 'ترجمه'}</button>
+    </div>
+    <div class="nav"><button class="pill wob press" data-act="prev" data-role="btn" ${S.step ? '' : 'disabled style="opacity:.35"'}>قبلی</button>
+      <button class="pill wob press" data-act="next" data-role="btn" ${S.step < 4 ? '' : 'disabled style="opacity:.35"'}>بعدی</button></div>`;
+  },
+
+  planted: set => `
+    <div class="center">${art(set, 'stage-1.svg', 'grow sway', 170)}
+      <p class="rise" style="--d:1.8s" data-role="doneTitle">بذر کاشته شد</p>
+      <p class="muted rise" style="--d:2.1s" data-role="hifzMeta">الکوثر ۱–۳ · فردا اولین آب</p>
+      <p class="quote rise" style="--d:2.6s" data-role="quote" data-uthmani="أَأَنتُمْ تَزْرَعُونَهُۥٓ أَمْ نَحْنُ ٱلزَّٰرِعُونَ" data-simple="أَأَنْتُمْ تَزْرَعُونَهُ أَمْ نَحْنُ الزَّارِعُونَ"></p>
+      <p class="foot rise" style="--d:3s;margin-top:6px;padding:0" data-role="foot">بذرت را کاشتی. رویاندن با اوست.</p>
+      <div class="actions rise" style="--d:3.4s"><button class="pill wob press" data-act="go:today" data-role="btn">برگشت به باغ</button></div>
+    </div>`
+};
+
+/* ================================================================== render */
+const stage = document.getElementById('stage');
+const pressed = id => document.getElementById(id).getAttribute('aria-pressed') === 'true';
+function render() {
+  const n = pressed('cmpBtn') ? 2 : 1;
+  stage.innerHTML = phoneSets.slice(0, n).map((set, pi) => `<div class="col">
+      <select data-phone="${pi}">${Object.entries(SETS).map(([k, v]) => `<option value="${k}" ${k === set ? 'selected' : ''}>${v}</option>`).join('')}</select>
+      <div class="phone ${S.enter === 'full' && !['splash', 'watered', 'planted'].includes(S.screen) ? 'enter' : ''}">${SCREENS[S.screen](set)}</div></div>`).join('');
+  stage.querySelectorAll('.phone.enter').forEach(ph => [...ph.children].forEach((c, i) => c.style.setProperty('--i', i)));
+  stage.querySelectorAll('[data-phone]').forEach(sel => sel.onchange = e => { phoneSets[+sel.dataset.phone] = e.target.value; S.enter = 'full'; render(); if (sel.dataset.phone === '0') saveDesign(); });
+  applyFonts();
+  const barKey = { watered: 'water', planted: 'sow' }[S.screen] || S.screen;
+  document.querySelectorAll('[data-go]').forEach(b => b.setAttribute('aria-pressed', b.dataset.go === barKey));
+  S.enter = null; S.anim = null;
+}
+function go(screen) {
+  stopAudio();
+  if (screen === 'water') { S.ri = 0; S.peek = new Set(); S.revealed = false; S.drinking = false; }
+  if (screen === 'sow') { S.step = 0; S.round = 0; S.heard = new Set(); }
+  S.screen = screen; S.enter = 'full'; render();
+}
+
+/* audio: Husary (muallim), EveryAyah, ayah by ayah */
+const audio = new Audio();
+function stopAudio() { audio.pause(); S.playing = -1; }
+function playFrom(ai) {
+  if (ai >= SURAHS.kawthar.ayat.length) { S.playing = -1; render(); return; }
+  S.playing = ai; S.heard.add(ai); S.anim = 'heard'; render();
+  audio.src = `https://everyayah.com/data/Husary_Muallim_128kbps/108${String(ai + 1).padStart(3, '0')}.mp3`;
+  audio.onended = () => playFrom(ai + 1);
+  audio.onerror = () => { S.playing = -1; render(); const h = document.querySelector('.hint'); if (h) h.textContent = 'صدا در دسترس نیست (اینترنت؟)'; };
+  audio.play().catch(() => audio.onerror());
+}
+
+stage.addEventListener('click', e => {
+  if (e.target.closest('select')) return;
+  if (document.body.classList.contains('fontmode')) {
+    const r = e.target.closest('[data-role]');
+    if (r) { e.preventDefault(); e.stopPropagation(); selRole = r.dataset.role; applyFonts(); showPanel(); }
+    return;
+  }
+  const w = e.target.closest('.wd.hid');
+  if (w && S.screen === 'water' && !S.revealed) { S.peek.add(+w.dataset.w); S.lastPeek = +w.dataset.w; S.anim = 'peek'; render(); return; }
+  const a = e.target.closest('[data-act]'); if (!a || S.drinking) return;
+  const [act, arg] = a.dataset.act.split(':');
+  if (act === 'go') go(arg);
+  if (act === 'reveal') { S.revealed = true; S.anim = 'reveal'; render(); }
+  if (act === 'grade') {
+    S.watered.add(QUEUE[S.ri]); S.drinking = true; render();
+    setTimeout(() => {
+      S.drinking = false;
+      if (S.ri + 1 < QUEUE.length) { S.ri++; S.peek = new Set(); S.revealed = false; S.enter = 'full'; }
+      else S.screen = 'watered';
+      S.enter = 'full'; render();
+    }, 1700);
+  }
+  if (act === 'step') { stopAudio(); S.step = +arg; S.round = 0; S.enter = 'soft'; render(); }
+  if (act === 'next' && S.step < 4) { stopAudio(); S.step++; S.round = 0; S.enter = 'soft'; render(); }
+  if (act === 'prev' && S.step > 0) { stopAudio(); S.step--; S.round = 0; S.enter = 'soft'; render(); }
+  if (act === 'round') { S.round++; S.anim = 'round'; render(); }
+  if (act === 'reveal-sow') { S.anim = 'reveal-sow'; render(); }
+  if (act === 'tr') { S.showTr = !S.showTr; render(); }
+  if (act === 'play') { if (S.playing >= 0) { stopAudio(); render(); } else playFrom(0); }
+  if (act === 'plant') { stopAudio(); S.screen = 'planted'; S.enter = 'full'; render(); }
+}, true);
+
+document.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go));
+document.getElementById('fontBtn').onclick = e => {
+  const on = !pressed('fontBtn'); e.currentTarget.setAttribute('aria-pressed', on);
+  document.body.classList.toggle('fontmode', on); if (!on) selRole = null; applyFonts(); showPanel();
+};
+document.getElementById('boilBtn').onclick = e => {
+  const on = !pressed('boilBtn'); e.currentTarget.setAttribute('aria-pressed', on); document.body.classList.toggle('noboil', !on); saveDesign();
+};
+const SPLASH_NAMES = { 'splash.svg':'مینیمال تازه (پیش‌فرض)', 'splash-first.svg':'اولی', 'splash-layers.svg':'لایه‌ها',
+  'splash-layers-soft.svg':'لایه‌های نرم', 'splash-hatch.svg':'هاشور' };
+const splashSel = document.getElementById('splashSel');
+splashSel.innerHTML = Object.keys(SPLASH_NAMES).filter(f => (ART.a2 || {})[f]).map(f => `<option value="${f}">${SPLASH_NAMES[f]}</option>`).join('');
+splashSel.value = S.splash;
+splashSel.onchange = e => { S.splash = e.target.value; go('splash'); saveDesign(); };
+document.getElementById('dlBtn').onclick = () => { const b = new Blob([JSON.stringify(designNow(), null, 1)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'design.json'; a.click(); };
+document.getElementById('clrBtn').onclick = () => { try { localStorage.removeItem('nabat-design-v1'); localStorage.removeItem(KEY); } catch (e) {} location.reload(); };
+document.getElementById('cmpBtn').onclick = e => { e.currentTarget.setAttribute('aria-pressed', !pressed('cmpBtn')); S.enter = 'full'; render(); };
+
+/* line boil for the simple-line set: step the hand-noise seed ~5 times a second (calm, not jittery) */
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let seed = 1; const turb = document.getElementById('turb');
+setInterval(() => { if (!reduce && pressed('boilBtn')) { seed = seed % 3 + 1; turb.setAttribute('seed', seed); } }, 200);
+
+render();
+</script>
+</body>
+</html>
