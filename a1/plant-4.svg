@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+<style>.ink{fill:none;stroke:#1d1b18;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}.soil{fill:none;stroke:#1d1b18;stroke-opacity:.55;stroke-width:.8;stroke-linecap:round}.g{fill:none;stroke:#3d8b4f;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.gf{fill:#3d8b4f}</style>
+<g transform="translate(100 232) scale(1.55) translate(-490 -200)">
+<path class="g" style="stroke-width:2.6" d="M491 208 Q485 165 492 118"/>
+<path class="g" d="M489 186 Q474 179 468 185 Q479 194 489 186"/>
+<path class="g" d="M489 170 Q505 160 511 167 Q500 176 489 170"/>
+<path class="g" d="M490 152 Q476 144 471 150 Q481 158 490 152"/>
+<path class="g" d="M491 136 Q505 127 510 133 Q501 141 491 136"/>
+<path class="g" d="M492 124 Q484 117 481 121 Q486 127 492 124"/>
+</g>
+</svg>

@@ -2,9 +2,9 @@
    App files: cache-first (a new build = a new cache name, so updates are clean).
    design.json: network-first (panel changes reach users), with the cached copy as fallback.
    Recitation audio & Amiri Quran font: cached the first time they're used. */
-const BUILD = '202611240301';
+const BUILD = '202611240355';
 const APP = 'nabat-app-' + BUILD, RUNTIME = 'nabat-runtime-v1';
-const SHELL = ['./', 'index.html', 'app.css?v=' + BUILD, 'app.js?v=' + BUILD, 'fsrs.js?v=' + BUILD,
+const SHELL = ['./', 'index.html', 'app.css?v=' + BUILD, 'app.js?v=' + BUILD, 'fsrs.js?v=' + BUILD, 'copy.js?v=' + BUILD,
   'data/quran.js?v=' + BUILD, 'data/revayat.js?v=' + BUILD, 'a1/art.js?v=' + BUILD, 'a2/art.js?v=' + BUILD,
   'fonts.css?v=' + BUILD, 'design.json', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
 

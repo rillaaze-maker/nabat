@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140">
+<style>.ink{fill:none;stroke:#1d1b18;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}.soil{fill:none;stroke:#1d1b18;stroke-opacity:.55;stroke-width:.8;stroke-linecap:round}.g{fill:none;stroke:#3d8b4f;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.gf{fill:#3d8b4f}</style>
+<path class="ink" d="M0 62.0 L10 60.0 L20 57.9 L30 55.9 L40 54.0 L50 52.1 L60 50.2 L70 48.4 L80 46.7 L90 45.1 L100 43.6 L110 42.2 L120 41.0 L130 39.8 L140 38.8 L150 38.0 L160 37.3 L170 36.7 L180 36.3 L190 36.1 L200 36.0 L210 36.1 L220 36.3 L230 36.7 L240 37.3 L250 38.0 L260 38.8 L270 39.8 L280 41.0 L290 42.2 L300 43.6 L310 45.1 L320 46.7 L330 48.4 L340 50.2 L350 52.1 L360 54.0 L370 55.9 L380 57.9 L390 60.0 L400 62.0"/>
+<path class="soil" d="M30 80 l7 -2 M90 85 l7 -2 M150 60 l7 -2 M230 73 l7 -2 M300 70 l7 -2 M360 98 l7 -2 M120 99 l7 -2 M260 99 l7 -2"/>
+</svg>

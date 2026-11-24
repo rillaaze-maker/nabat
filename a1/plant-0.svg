@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+<style>.ink{fill:none;stroke:#1d1b18;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}.soil{fill:none;stroke:#1d1b18;stroke-opacity:.55;stroke-width:.8;stroke-linecap:round}.g{fill:none;stroke:#3d8b4f;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.gf{fill:#3d8b4f}</style>
+<g transform="translate(100 232) scale(1.55) translate(-90 -200)">
+<ellipse class="ink" cx="90" cy="214" rx="6" ry="4" transform="rotate(-20 90 214)"/>
+<circle class="gf" cx="92" cy="212" r="1.4"/>
+</g>
+</svg>
